@@ -36,4 +36,15 @@ def test_get_statement(new_bank_account):
     new_bank_account.deposit(2000, '13/01/2023')
     new_bank_account.withdraw(500, '14/01/2023')
     assert new_bank_account.balance == 2500.00
-    assert new_bank_account.get_statement() == new_bank_account.display_transactions
+    display_transactions = "date || credit || debit || balance \n14/01/2023 ||  || 500.00 || 2500.00 \n13/01/2023 || 2000.00 ||  || 3000.00 \n10/01/2023 || 1000.00 ||  || 1000.00"
+    assert new_bank_account.get_statement() == display_transactions
+
+@pytest.mark.parametrize("deposit,withdraw,expected", [
+    (30, 10, 20),
+    (20, 2, 18),
+])
+def test_transactions(deposit, withdraw, expected):
+    my_account = BankAccount()
+    my_account.deposit(deposit, '10/01/2023')
+    my_account.withdraw(withdraw, '10/01/2023')
+    assert my_account.balance == expected
