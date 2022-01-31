@@ -1,3 +1,6 @@
+class InsufficientBalance(Exception):
+    pass
+
 class BankAccount():
     def __init__(self):
         self.balance = 0
@@ -5,12 +8,14 @@ class BankAccount():
         self.debit = 0
         self.date = ""
         self.statement = {} 
+        self.load_transactions = ["date", "||", "credit", "||", "debit", "||", "balance"]
+        self.display_transactions = ""
 
     def deposit(self, amount, date):
-        #Allows client to deposit money into account
-        self.balance += float(amount)
+        '''Allows client to deposit money into account'''
+        self.balance += amount
         display_balance = '%.2f' % float(self.balance)
-        self.credit = float(amount)
+        self.credit = amount
         display_credit = '%.2f' % float(self.credit)
         self.debit = ""
         self.date = date
@@ -21,11 +26,13 @@ class BankAccount():
         }
 
     def withdraw(self, amount, date):
-        #Allows client to withdraw money from account
-        self.balance -= float(amount)
+        '''Allows client to withdraw money from account'''
+        if self.balance < amount:
+            raise InsufficientBalance('Sorry, your maximum withdrawal amount is {}'.format(self.balance))
+        self.balance -= amount
         display_balance = '%.2f' % float(self.balance)
         self.credit = ""
-        self.debit = float(amount)
+        self.debit = amount
         display_debit = '%.2f' % float(self.debit)
         self.date = date
         self.statement[self.date] = { "date": self.date,
@@ -35,14 +42,13 @@ class BankAccount():
         }
        
     def get_statement(self):
-        # Allows client to view their transanction history in chronological
+        '''Allows client to view their transanction history in chronological'''
         transactions = dict(reversed(list(self.statement.items())))
         for i in transactions.values():
-            print("{date} || {credit} || {debit} || {balance}".format(date=i["date"], credit=i["credit"], debit=i["debit"], balance=i["balance"]))
+            self.load_transactions.append("\n{date} || {credit} || {debit} || {balance}".format(date=i["date"], credit=i["credit"], debit=i["debit"], balance=i["balance"]))
+        self.display_transactions = " ".join(self.load_transactions)
+        return self.display_transactions
 
 
-client = BankAccount()
-client.deposit('1000', '10/01/2023')
-client.deposit('2000', '13/01/2023')
-client.withdraw('500', '14/01/2023')
-print(client.get_statement())
+
+
