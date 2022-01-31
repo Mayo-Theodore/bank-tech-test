@@ -5,9 +5,9 @@ def test_deposit():
     #Tests that client can deposit money
     client = BankAccount()
     client.deposit('1000', '10/01/2023')
-    assert client.balance == 1000
-    assert client.credit == 1000
-    assert client.debit == 0
+    assert client.balance == 1000.00
+    assert client.credit == 1000.00
+    assert client.debit == ""
     assert client.date == '10/01/2023'
 
 def test_withdrawal():
@@ -15,9 +15,9 @@ def test_withdrawal():
     client = BankAccount()
     client.deposit('1000', '10/01/2023')
     client.withdraw('500', '14/01/2023')
-    assert client.balance == 500
-    assert client.credit == 0
-    assert client.debit == 500
+    assert client.balance == 500.00
+    assert client.credit == ""
+    assert client.debit == 500.00
     assert client.date == '14/01/2023'
 
 def test_get_statement():

@@ -7,31 +7,38 @@ class BankAccount():
         self.statement = {} 
 
     def deposit(self, amount, date):
-        self.balance += int(amount)
-        self.credit = int(amount)
+        #Allows client to deposit money into account
+        self.balance += float(amount)
+        display_balance = '%.2f' % float(self.balance)
+        self.credit = float(amount)
+        display_credit = '%.2f' % float(self.credit)
+        self.debit = ""
         self.date = date
         self.statement[self.date] = { "date": self.date,
-            "credit": self.credit,
-            "balance": self.balance
+            "credit": display_credit,
+            "debit": self.debit,
+            "balance": display_balance
         }
 
     def withdraw(self, amount, date):
-        self.balance -= int(amount)
-        self.debit += int(amount)
+        #Allows client to withdraw money from account
+        self.balance -= float(amount)
+        display_balance = '%.2f' % float(self.balance)
+        self.credit = ""
+        self.debit = float(amount)
+        display_debit = '%.2f' % float(self.debit)
         self.date = date
         self.statement[self.date] = { "date": self.date,
-            "debit": self.debit,
-            "balance": self.balance
+            "credit": self.credit,
+            "debit": display_debit,
+            "balance": display_balance
         }
        
     def get_statement(self):
-        # return "date || credit || debit || balance\n 10/01/2023 || 1000.00 || || 1000.00"
-        # Reverse dictionary keys order to show transactions in reverse chronological order
+        # Allows client to view their transanction history in chronological
         transactions = dict(reversed(list(self.statement.items())))
-        for value in transactions.values():
-            print(value)
-            
-
+        for i in transactions.values():
+            print("{date} || {credit} || {debit} || {balance}".format(date=i["date"], credit=i["credit"], debit=i["debit"], balance=i["balance"]))
 
 
 client = BankAccount()
