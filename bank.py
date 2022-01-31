@@ -25,9 +25,13 @@ class BankAccount():
         }
        
     def get_statement(self):
-        return "date || credit || debit || balance\n 10/01/2023 || 1000.00 || || 1000.00"
-        return self.statement
-        
+        # return "date || credit || debit || balance\n 10/01/2023 || 1000.00 || || 1000.00"
+        # Reverse dictionary keys order to show transactions in reverse chronological order
+        transactions = dict(reversed(list(self.statement.items())))
+        for value in transactions.values():
+            print(value)
+            
+
 
 
 client = BankAccount()
