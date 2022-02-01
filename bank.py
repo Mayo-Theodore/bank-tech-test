@@ -12,7 +12,7 @@ class BankAccount():
         self.date = ""
         self.statement = {} 
         self.display_transactions = ""
-        
+
     def deposit(self, amount, date):
         MAX_DEPOSIT = 10000
         '''Allows client to deposit money into account'''
