@@ -1,5 +1,5 @@
 import pytest
-from bank import BankAccount, InsufficientBalance
+from bank import BankAccount, InsufficientBalance, MaximumDeposit
 
 @pytest.fixture
 def new_bank_account():
@@ -9,9 +9,13 @@ def new_bank_account():
 def test_default_initial_amount(new_bank_account):
     assert new_bank_account.balance == 0
 
-def test_withdraw_cash_raises_exception_on_insufficient_balance(new_bank_account):
+def test_withdraw_raises_exception_on_insufficient_balance(new_bank_account):
     with pytest.raises(InsufficientBalance):
         new_bank_account.withdraw(100, '11/01/2023')
+
+def test_deposit_raises_exception_on_deposit_limit(new_bank_account):
+    with pytest.raises(MaximumDeposit):
+        new_bank_account.deposit(35000, '12/01/2023')
 
 def test_deposit(new_bank_account):
     '''Tests that client can deposit money'''

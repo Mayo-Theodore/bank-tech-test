@@ -1,6 +1,9 @@
 class InsufficientBalance(Exception):
     pass
 
+class MaximumDeposit(Exception):
+    pass
+
 class BankAccount():
     def __init__(self):
         self.balance = 0
@@ -12,7 +15,10 @@ class BankAccount():
         self.display_transactions = ""
 
     def deposit(self, amount, date):
+        MAX_DEPOSIT = 10000
         '''Allows client to deposit money into account'''
+        if amount > MAX_DEPOSIT:
+            raise MaximumDeposit('Sorry, the deposit limit is {}'.format(MAX_DEPOSIT))
         self.balance += amount
         display_balance = '%.2f' % float(self.balance)
         self.credit = amount
