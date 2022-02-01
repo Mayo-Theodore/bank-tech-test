@@ -2,7 +2,7 @@
 
 This is a tech test which I have completed in order to improve my ability to convert a set of requirements into a fully interactive and well-tested application. 
 
-This project was completed using Python, and the tests were written using Pytest.
+Technologies: This project was completed using Python, and the tests were written using Pytest.
 
 ## Requirements
 
