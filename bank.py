@@ -57,6 +57,10 @@ class BankAccount():
         self.display_transactions = " ".join(load_transactions)
         return self.display_transactions
 
-my_bank_account = BankAccount()
-my_bank_account.deposit(1000, "10/01/2023")
-print(my_bank_account.withdraw(500, "14/01/2023"))
+bank_a = BankAccount()
+print(bank_a.deposit(1000, "10/01/2023"))
+print(bank_a.withdraw(500, "14/01/2023"))
+print(bank_a.get_statement())
+
+
+
