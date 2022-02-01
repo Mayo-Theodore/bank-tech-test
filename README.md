@@ -45,6 +45,7 @@ Make sure you are in the directory that contains the "test_bank.py" file, then t
 ```bash
 #Install pytest
 pip install pytest
+pip install pytest-mock
 
 # Run tests
 pytest

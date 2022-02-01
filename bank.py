@@ -29,6 +29,7 @@ class BankAccount():
             "debit": self.debit,
             "balance": display_balance
         }
+        return self.statement
 
     def withdraw(self, amount, date):
         '''Allows client to withdraw money from account'''
@@ -45,6 +46,7 @@ class BankAccount():
             "debit": display_debit,
             "balance": display_balance
         }
+        return self.statement
 
     def get_statement(self):
         '''Allows client to view their transanction history in chronological'''
@@ -54,3 +56,7 @@ class BankAccount():
             load_transactions.append("\n{date} || {credit} || {debit} || {balance}".format(date=i["date"], credit=i["credit"], debit=i["debit"], balance=i["balance"]))
         self.display_transactions = " ".join(load_transactions)
         return self.display_transactions
+
+my_bank_account = BankAccount()
+my_bank_account.deposit(1000, "10/01/2023")
+print(my_bank_account.withdraw(500, "14/01/2023"))
