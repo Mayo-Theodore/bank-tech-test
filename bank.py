@@ -11,9 +11,8 @@ class BankAccount():
         self.debit = 0
         self.date = ""
         self.statement = {} 
-        self.load_transactions = ["date", "||", "credit", "||", "debit", "||", "balance"]
         self.display_transactions = ""
-
+        
     def deposit(self, amount, date):
         MAX_DEPOSIT = 10000
         '''Allows client to deposit money into account'''
@@ -46,15 +45,12 @@ class BankAccount():
             "debit": display_debit,
             "balance": display_balance
         }
-       
+
     def get_statement(self):
         '''Allows client to view their transanction history in chronological'''
         transactions = dict(reversed(list(self.statement.items())))
+        load_transactions = ["date", "||", "credit", "||", "debit", "||", "balance"]
         for i in transactions.values():
-            self.load_transactions.append("\n{date} || {credit} || {debit} || {balance}".format(date=i["date"], credit=i["credit"], debit=i["debit"], balance=i["balance"]))
-        self.display_transactions = " ".join(self.load_transactions)
+            load_transactions.append("\n{date} || {credit} || {debit} || {balance}".format(date=i["date"], credit=i["credit"], debit=i["debit"], balance=i["balance"]))
+        self.display_transactions = " ".join(load_transactions)
         return self.display_transactions
-
-
-
-

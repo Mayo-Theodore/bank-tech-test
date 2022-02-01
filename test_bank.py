@@ -49,6 +49,6 @@ def test_get_statement(new_bank_account):
 ])
 def test_transactions(deposit, withdraw, expected):
     my_account = BankAccount()
-    my_account.deposit(deposit, '10/01/2023')
-    my_account.withdraw(withdraw, '10/01/2023')
+    my_account.deposit(deposit, '21/01/2023')
+    my_account.withdraw(withdraw, '22/01/2023')
     assert my_account.balance == expected
