@@ -1,6 +1,50 @@
 import pytest
 from bank import BankAccount, AddMoney, RemoveMoney, ViewStatement, InsufficientBalance, MaximumDeposit
 
+class MockAccount:
+    def __init__(self):
+        self.balance = 0
+        self.credit = 0
+        self.debit = 0
+        self.date = ""
+        self.statement = {}
+        self.display_statement = ""
+
+class MockAccountWithBalance:
+    def __init__(self):
+        self.balance = 1000
+        self.credit = 1000
+        self.debit = ""
+        self.date = "10/01/2023"
+        self.statement = {'10/01/2023': {'date': '10/01/2023', 'credit': '1000.00', 'debit': '', 'balance': '1000.00'}}
+        self.display_statement = ""
+
+def test_mock_deposit(monkeypatch):
+    '''Test deposit money using mocks'''
+    def mock_account():
+        return MockAccount()
+    monkeypatch.setattr('bank.BankAccount', mock_account)
+    add_money = BankAccount()
+    assert add_money.deposit(8000, "10/01/2023") == {'10/01/2023': {'date': '10/01/2023', 'credit': '8000.00', 'debit': '', 'balance': '8000.00'}}
+
+def test_mock_withdraw_money(monkeypatch):
+    '''Test withdraw money using mocks '''
+    def mock_account():
+        return MockAccountWithBalance()
+    monkeypatch.setattr('bank.BankAccount', mock_account)
+    mock_account = MockAccountWithBalance()
+    withdraw_money = RemoveMoney.withdraw(mock_account, 100, "14/01/2023")
+    assert withdraw_money == {'10/01/2023': {'date': '10/01/2023', 'credit': '1000.00', 'debit': '', 'balance': '1000.00'}, '14/01/2023': {'date': '14/01/2023', 'credit': '', 'debit': '100.00', 'balance': '900.00'}}
+
+def test_mock_get_statement(monkeypatch):
+    '''Test view statement using mocks '''
+    def mock_account():
+        return MockAccountWithBalance()
+    monkeypatch.setattr('bank.BankAccount', mock_account)
+    mock_account = MockAccountWithBalance()
+    statement = ViewStatement.get_statement(mock_account)
+    assert statement == 'date || credit || debit || balance \n10/01/2023 || 1000.00 ||  || 1000.00'
+
 @pytest.fixture
 def new_bank_account():
     '''Returns a new instance of Bank Account'''
@@ -64,4 +108,3 @@ def test_get_statement(bank_account_with_multiple_transactions):
     '''User can view their statement after making transactions '''
     display_transactions = "date || credit || debit || balance \n14/01/2023 ||  || 500.00 || 2500.00 \n13/01/2023 || 2000.00 ||  || 3000.00 \n10/01/2023 || 1000.00 ||  || 1000.00"
     assert bank_account_with_multiple_transactions.get_statement() == display_transactions
-
