@@ -4,18 +4,10 @@ class InsufficientBalance(Exception):
 class MaximumDeposit(Exception):
     pass
 
-class BankAccount():
-    def __init__(self):
-        self.balance = 0
-        self.credit = 0
-        self.debit = 0
-        self.date = ""
-        self.statement = {} 
-        self.display_transactions = ""
-
+class Deposit():
     def deposit(self, amount, date):
-        MAX_DEPOSIT = 10000
         '''Allows client to deposit money into account'''
+        MAX_DEPOSIT = 10000
         if amount > MAX_DEPOSIT:
             raise MaximumDeposit('Sorry, the deposit limit is {}'.format(MAX_DEPOSIT))
         self.balance += amount
@@ -31,7 +23,8 @@ class BankAccount():
         }
         return self.statement
 
-    def withdraw(self, amount, date):
+class Withdraw():
+      def withdraw(self, amount, date):
         '''Allows client to withdraw money from account'''
         if self.balance < amount:
             raise InsufficientBalance('Sorry, your maximum withdrawal amount is {}'.format(self.balance))
@@ -48,19 +41,24 @@ class BankAccount():
         }
         return self.statement
 
+class Statement():
     def get_statement(self):
         '''Allows client to view their transanction history in chronological'''
         transactions = dict(reversed(list(self.statement.items())))
         load_transactions = ["date", "||", "credit", "||", "debit", "||", "balance"]
         for i in transactions.values():
             load_transactions.append("\n{date} || {credit} || {debit} || {balance}".format(date=i["date"], credit=i["credit"], debit=i["debit"], balance=i["balance"]))
-        self.display_transactions = " ".join(load_transactions)
-        return self.display_transactions
+        self.display_statement = " ".join(load_transactions)
+        return self.display_statement
 
-bank_a = BankAccount()
-print(bank_a.deposit(1000, "10/01/2023"))
-print(bank_a.withdraw(500, "14/01/2023"))
-print(bank_a.get_statement())
+class BankAccount(Deposit, Withdraw, Statement):
+    def __init__(self):
+        self.balance = 0
+        self.credit = 0
+        self.debit = 0
+        self.date = ""
+        self.statement = {} 
+        self.display_statement = ""
 
 
 
