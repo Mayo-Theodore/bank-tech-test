@@ -59,6 +59,3 @@ class BankAccount(AddMoney, RemoveMoney, ViewStatement):
         self.date = ""
         self.statement = {} 
         self.display_statement = ""
-
-
-
