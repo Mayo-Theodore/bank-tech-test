@@ -39,7 +39,9 @@ my_bank_account.deposit(5, "05/01/2023")
 print(my_bank_account.get_statement())
 ```
 Run the file to see your bank statement in the terminal
+
 ![View Statement](tech_test_bank_statement.jpg)
+
 ## Testing
 Make sure you are in the directory that contains the "test_bank.py" file, then type the following commands into your terminal
 ```bash
