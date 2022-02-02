@@ -4,7 +4,7 @@ class InsufficientBalance(Exception):
 class MaximumDeposit(Exception):
     pass
 
-class Deposit():
+class AddMoney():
     def deposit(self, amount, date):
         '''Allows client to deposit money into account'''
         MAX_DEPOSIT = 10000
@@ -23,7 +23,7 @@ class Deposit():
         }
         return self.statement
 
-class Withdraw():
+class RemoveMoney():
       def withdraw(self, amount, date):
         '''Allows client to withdraw money from account'''
         if self.balance < amount:
@@ -41,7 +41,7 @@ class Withdraw():
         }
         return self.statement
 
-class Statement():
+class ViewStatement():
     def get_statement(self):
         '''Allows client to view their transanction history in chronological'''
         transactions = dict(reversed(list(self.statement.items())))
@@ -51,7 +51,7 @@ class Statement():
         self.display_statement = " ".join(load_transactions)
         return self.display_statement
 
-class BankAccount(Deposit, Withdraw, Statement):
+class BankAccount(AddMoney, RemoveMoney, ViewStatement):
     def __init__(self):
         self.balance = 0
         self.credit = 0
